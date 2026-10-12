@@ -1,0 +1,17 @@
+flowchart TD
+    A["终端启动"] --> B["zshrc 执行 eval brewpy init zsh"]
+    B --> C["brewpy 读 config.toml 得到 default = 3.14"]
+    C --> D["规范化版本号 3.14"]
+    D --> E["brew --prefix 得到 /opt/homebrew"]
+    E --> F["扫描 opt 校验 libexec/bin/python3 可执行"]
+    F --> G{"找到 3.14 且 python3 存在"}
+    G -- 否 --> G1["stderr 警告 跳过激活 不注入 PATH"]
+    G -- 是 --> H["解析 bin_dir 为 python@3.14/libexec/bin"]
+    H --> I["打印 activate 代码到 stdout"]
+    I --> J["shell 定义三个辅助函数"]
+    J --> K["执行 __brewpy_activate 目标目录"]
+    K --> L["strip 剔除旧的注入项"]
+    L --> M["PATH 前置插入该目录"]
+    M --> N["export BREWPY_ACTIVE_DIR"]
+    N --> O["hash -r 清缓存"]
+    O --> P["敲 python3 命中 3.14"]
