@@ -1,4 +1,4 @@
-# brewpy
+# Brewpy
 
 用 Rust 写的 Homebrew Python 版本切换器：在 macOS 上，把 `python3` 指向你通过 `brew install python@X.Y` 装的那一个版本，而不是系统自带的那一个。
 
